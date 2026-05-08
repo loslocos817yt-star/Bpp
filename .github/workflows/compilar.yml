@@ -13,10 +13,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pyinstaller requests
-    - name: Generar Binario de Linux
+    - name: Generar Binario
       run: pyinstaller --onefile BppInstaler.py
-    - name: Subir Binario como Artefacto
+    - name: Subir Artefacto
       uses: actions/upload-artifact@v3
       with:
-        name: BppInstaler_Linux_x64
+        name: BppInstaler_Linux
         path: dist/BppInstaler
