@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="web/icon.png">
     <title>B++ | El lenguaje de transpilación universal</title>
+
     <style>
-        :root { --java-red: #E74C3C; --java-blue: #2980B9; --bg-gray: #F4F4F4; }
+        :root {
+            --java-red: #E74C3C;
+            --java-blue: #2980B9;
+            --bg-gray: #F4F4F4;
+        }
 
         body {
             font-family: Arial, sans-serif;
@@ -30,7 +35,6 @@
             padding: 0 20px;
         }
 
-        /* HEADER */
         header {
             background: var(--bg-gray);
             border-bottom: 4px solid var(--java-red);
@@ -60,7 +64,6 @@
             margin-bottom: 30px;
         }
 
-        /* BOTONES */
         .btn-download {
             background: var(--java-red);
             color: white;
@@ -79,7 +82,6 @@
             background: #ff5e4d;
         }
 
-        /* SECCIONES */
         .page {
             display: none;
             padding: 40px 0;
@@ -103,7 +105,6 @@
             margin-top: 0;
         }
 
-        /* SIDEBAR */
         .sidebar {
             background: #F9F9F9;
             padding: 25px;
@@ -150,7 +151,6 @@
             color: var(--java-red);
         }
 
-        /* DESCARGAS */
         .search-box {
             background: #eee;
             padding: 15px;
@@ -194,7 +194,6 @@
             border-radius: 3px;
         }
 
-        /* MODAL */
         .modal {
             display: none;
             position: fixed;
@@ -235,7 +234,6 @@
             line-height: 1.8;
         }
 
-        /* 404 */
         .error-container {
             text-align: center;
             padding: 50px;
@@ -294,17 +292,9 @@
 
             <p>
                 B++ permite optimizar flujos de trabajo mediante transpilación cruzada de alto nivel.
-                Al descargar B++, accede al núcleo PattitexTEC, diseñado para ofrecer velocidad nativa
-                con sintaxis moderna.
             </p>
 
             <h2>¿Cómo usar B++?</h2>
-
-            <p>
-                B++ usa una sintaxis simple enfocada en terminales móviles como Pydroid 3 y Termux.
-            </p>
-
-            <h3>Ejemplo básico</h3>
 
             <div class="code-block">
 {
@@ -318,20 +308,6 @@
 }
             </div>
 
-            <h3>Variables</h3>
-
-            <div class="code-block">
-{
-<br>
-&nbsp;&nbsp;val numero = 10
-<br>
-&nbsp;&nbsp;text(numero)
-<br>
-}
-            </div>
-
-            <h3>Entrada de usuario</h3>
-
             <div class="code-block">
 {
 <br>
@@ -342,8 +318,6 @@
 }
             </div>
 
-            <h3>Condiciones</h3>
-
             <div class="code-block">
 {
 <br>
@@ -353,40 +327,6 @@
 <br>
 }
             </div>
-
-            <h3>Esperas</h3>
-
-            <div class="code-block">
-{
-<br>
-&nbsp;&nbsp;text("Cargando...")
-<br>
-&nbsp;&nbsp;esperar(2)
-<br>
-&nbsp;&nbsp;text("Listo")
-<br>
-}
-            </div>
-
-            <h3>Colores disponibles</h3>
-
-            <ul>
-                <li>ROJO</li>
-                <li>VERDE</li>
-                <li>AZUL</li>
-                <li>AMARILLO</li>
-                <li>CYAN</li>
-                <li>MAGENTA</li>
-                <li>GRIS</li>
-            </ul>
-
-            <h3>Compilación</h3>
-
-            <ul>
-                <li>Python (.py)</li>
-                <li>C++ (.cpp)</li>
-                <li>Binario (.bin)</li>
-            </ul>
 
         </section>
 
@@ -466,16 +406,6 @@
                     Ir al repositorio GitHub
                 </a>
 
-                <h3>Contacto</h3>
-
-                <a href="mailto:loslocos817yt@gmail.com" class="mail-link">
-                    loslocos817yt@gmail.com
-                </a>
-
-                <a href="mailto:doryansanchez72@gmail.com" class="mail-link">
-                    doryansanchez72@gmail.com
-                </a>
-
             </aside>
 
         </div>
@@ -506,31 +436,11 @@
             Guía de Inicio Rápido
         </h2>
 
-        <p>
-            Siga estos pasos para ejecutar B++ en su entorno:
-        </p>
-
-        <b>1. Descarga el archivo:</b>
-
-        <p>
-            Vaya a la sección de descargas y baje la versión más reciente.
-        </p>
-
-        <b>2. Ejecución:</b>
-
-        <p>
-            Abra Pydroid 3 o Termux y ejecute:
-        </p>
+        <p>Siga estos pasos para ejecutar B++:</p>
 
         <div class="code-block">
-python "nombre_del_archivo.py"
+python "archivo.py"
         </div>
-
-        <b>3. ¡Listo!</b>
-
-        <p>
-            B++ cargará automáticamente.
-        </p>
 
         <button
             class="btn-download"
@@ -596,6 +506,8 @@ python "nombre_del_archivo.py"
 
             const text = await res.text();
 
+            console.log(text);
+
             const html = new DOMParser().parseFromString(text, 'text/html');
 
             allFiles = Array.from(html.querySelectorAll('a'))
@@ -608,6 +520,8 @@ python "nombre_del_archivo.py"
         } catch (e) {
 
             lista.innerHTML = '<li>Error de conexión.</li>';
+
+            console.log(e);
         }
     }
 
