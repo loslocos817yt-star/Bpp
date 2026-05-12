@@ -8,20 +8,29 @@
     <style>
         :root { --java-red: #E74C3C; --java-blue: #2980B9; --bg-gray: #F4F4F4; }
         body { font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; background: white; }
+        
         .navbar { background: #333; padding: 10px 0; text-align: center; color: white; font-size: 14px; }
         .container { max-width: 960px; margin: auto; padding: 0 20px; }
+
         header { background: var(--bg-gray); border-bottom: 4px solid var(--java-red); padding: 50px 0; }
         .hero { display: flex; align-items: center; gap: 40px; }
         .logo-img { width: 130px; height: 130px; image-rendering: pixelated; }
         h1 { font-size: 34px; margin: 0 0 10px 0; }
         .hero-text { font-size: 19px; color: #555; margin-bottom: 30px; }
-        .btn-download { background: var(--java-red); color: white; text-decoration: none; padding: 18px 40px; font-size: 22px; font-weight: bold; border-radius: 5px; display: inline-block; box-shadow: 0 5px #C0392B; cursor: pointer; border: none; }
+
+        .btn-download { 
+            background: var(--java-red); color: white; text-decoration: none; 
+            padding: 18px 40px; font-size: 22px; font-weight: bold; border-radius: 5px;
+            display: inline-block; box-shadow: 0 5px #C0392B; cursor: pointer; border: none;
+        }
         .btn-download:hover { background: #ff5e4d; }
+
         .page { display: none; padding: 40px 0; min-height: 400px; }
         .active { display: block; }
         .main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
         h2 { border-bottom: 1px solid #ccc; padding-bottom: 10px; color: var(--java-blue); margin-top: 30px; }
         h2:first-child { margin-top: 0; }
+
         .sidebar { background: #F9F9F9; padding: 25px; border: 1px solid #DDD; height: fit-content; }
         .sidebar h3 { font-size: 17px; margin-top: 20px; color: #E67E22; border-bottom: 1px solid #eee; }
         .sidebar h3:first-child { margin-top: 0; }
@@ -29,167 +38,184 @@
         .sidebar li { margin-bottom: 12px; }
         .link-action { color: var(--java-blue); text-decoration: underline; cursor: pointer; }
         .mail-link { color: #555; text-decoration: none; font-size: 12px; display: block; margin-bottom: 5px; word-break: break-all; }
-        .code-block { background: #222; color: #7f7; padding: 15px; font-family: monospace; border-radius: 4px; overflow-x: auto; margin: 10px 0; line-height: 1.8; }
+
+        .code-block { background: #222; color: #7f7; padding: 15px; font-family: monospace; border-radius: 4px; overflow-x: auto; margin: 10px 0; line-height: 1.6; }
+        .cmd-label { color: #E67E22; font-weight: bold; font-size: 14px; display: block; margin-top: 15px; }
+
         .search-box { background: #eee; padding: 15px; margin-bottom: 20px; border-radius: 4px; display: flex; align-items: center; gap: 10px; }
         .search-box input { flex-grow: 1; padding: 8px; border: 1px solid #ccc; outline: none; }
         .file-list { list-style: none; padding: 0; border: 1px solid #EEE; border-radius: 4px; }
         .file-item { padding: 20px; border-bottom: 1px solid #EEE; display: flex; justify-content: space-between; align-items: center; background: #fff; }
         .dl-link { background: var(--java-blue); color: white; text-decoration: none; padding: 8px 20px; font-size: 13px; font-weight: bold; border-radius: 3px; }
+
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
         .modal-content { background: white; margin: 10% auto; padding: 30px; width: 80%; max-width: 600px; border-radius: 8px; position: relative; }
         .close { position: absolute; right: 20px; top: 10px; font-size: 28px; cursor: pointer; }
+
         .error-container { text-align: center; padding: 50px; display: none; }
         .error-container img { width: 180px; margin-bottom: 20px; }
+
         footer { background: #333; color: #ccc; text-align: center; padding: 30px 0; margin-top: 60px; font-size: 12px; }
     </style>
 </head>
 <body>
 
-<div class="navbar">Información de seguridad: Mantenga su entorno B++ actualizado para mejorar el rendimiento.</div>
+    <div class="navbar">Información de seguridad: Mantenga su entorno B++ actualizado para mejorar el rendimiento.</div>
 
-<div id="home" class="page active">
-    <header>
-        <div class="container hero">
-            <img src="web/icon.png" class="logo-img">
-            <div>
-                <h1>Descarga gratuita de B++</h1>
-                <p class="hero-text">Obtenga el lenguaje que potencia la transpilación nativa en dispositivos móviles y sistemas industriales.</p>
-                <button class="btn-download" onclick="showDownloads()">Aceptar e iniciar descarga gratuita</button>
+    <div id="home" class="page active">
+        <header>
+            <div class="container hero">
+                <img src="web/icon.png" class="logo-img">
+                <div>
+                    <h1>Descarga gratuita de B++</h1>
+                    <p class="hero-text">Obtenga el lenguaje que potencia la transpilación nativa en dispositivos móviles y sistemas industriales.</p>
+                    <button class="btn-download" onclick="showDownloads()">Aceptar e iniciar descarga gratuita</button>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <div class="container main-grid" style="margin-top: 40px;">
-        <section>
-            <h2>¿Por qué usar B++?</h2>
-            <p>B++ permite optimizar flujos de trabajo mediante transpilación cruzada de alto nivel.</p>
+        <div class="container main-grid" style="margin-top: 40px;">
+            <section>
+                <h2>¿Cómo usar B++?</h2>
+                <p>B++ utiliza una sintaxis simplificada para manejar variables, entradas y lógica de colores en terminal.</p>
+                
+                <span class="cmd-label">// Definición de Variables y Texto con Colores</span>
+                <div class="code-block">
+                    {<br>
+                    &nbsp;&nbsp;val nombre = "Doryan"<br>
+                    &nbsp;&nbsp;text("Hola Mundo") -> VERDE<br>
+                    &nbsp;&nbsp;text(nombre)<br>
+                    }
+                </div>
+
+                <span class="cmd-label">// Entrada de Usuario (Input)</span>
+                <div class="code-block">
+                    {<br>
+                    &nbsp;&nbsp;preguntar("Como te llamas?") -> usuario<br>
+                    &nbsp;&nbsp;text(usuario) -> CYAN<br>
+                    }
+                </div>
+
+                <span class="cmd-label">// Lógica Condicional</span>
+                <div class="code-block">
+                    {<br>
+                    &nbsp;&nbsp;val admin = "si"<br>
+                    &nbsp;&nbsp;si admin == "si" -> text("Acceso permitido") -> VERDE<br>
+                    }
+                </div>
+            </section>
             
-            <h2>Sintaxis de ejemplo</h2>
-            <div class="code-block">
-                {<br>&nbsp;&nbsp;val nombre = "Doryan"<br>&nbsp;&nbsp;text("Hola Mundo") -> VERDE<br>&nbsp;&nbsp;text(nombre)<br>}
-            </div>
-            <div class="code-block">
-                {<br>&nbsp;&nbsp;preguntar("Como te llamas?") -> usuario<br>&nbsp;&nbsp;text(usuario) -> CYAN<br>}
-            </div>
-            <div class="code-block">
-                {<br>&nbsp;&nbsp;val admin = "si"<br>&nbsp;&nbsp;si admin == "si" -> text("Acceso permitido") -> VERDE<br>}
-            </div>
-        </section>
-
-        <aside class="sidebar">
-            <h3>Soporte</h3>
-            <ul>
-                <li class="link-action" onclick="openModal()">Instrucciones de instalación</li>
-                <li><a href="https://github.com/loslocos817yt-star/Bpp/tree/main/Descargas" style="color:var(--java-blue); text-decoration: underline;">Soporte de GitHub</a></li>
-            </ul>
-            <h3>Contacto Directo</h3>
-            <a href="mailto:loslocos817yt@gmail.com" class="mail-link">loslocos817yt@gmail.com</a>
-            <a href="mailto:doryansanchez72@gmail.com" class="mail-link">doryansanchez72@gmail.com</a>
-        </aside>
-    </div>
-</div>
-
-<div id="download-page" class="page">
-    <div class="container">
-        <h2 style="margin-top: 20px;">Repositorio de Descargas</h2>
-        <div class="main-grid">
-            <div>
-                <div class="search-box">
-                    <label>Buscar:</label>
-                    <input type="text" id="search" placeholder="Ej: bpp 0.3" oninput="filterFiles()">
-                </div>
-                <ul id="lista" class="file-list"></ul>
-                <div id="not-found" class="error-container">
-                    <img src="web/mr.Stick/404.png" alt="404">
-                    <h3>404 | Recurso no encontrado</h3>
-                </div>
-            </div>
             <aside class="sidebar">
-                <h3>Soporte Técnico</h3>
-                <a href="https://github.com/loslocos817yt-star/Bpp/tree/main/Descargas" style="color:var(--java-blue); font-size:13px; display:block;">Ir al repositorio GitHub</a>
+                <h3>Soporte</h3>
+                <ul>
+                    <li class="link-action" onclick="openModal()">Instrucciones de instalación</li>
+                    <li><a href="https://github.com/loslocos817yt-star/Bpp/tree/main/Descargas" style="color:var(--java-blue); text-decoration: underline;">Soporte de GitHub</a></li>
+                </ul>
+                <h3>Contacto Directo</h3>
+                <a href="mailto:loslocos817yt@gmail.com" class="mail-link">loslocos817yt@gmail.com</a>
+                <a href="mailto:doryansanchez72@gmail.com" class="mail-link">doryansanchez72@gmail.com</a>
             </aside>
         </div>
-        <p><a href="#" onclick="showHome()" style="color:var(--java-blue); font-size:14px; display:inline-block; margin-top:20px;">« Volver a la página de inicio</a></p>
     </div>
-</div>
 
-<div id="instruccionesModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2 style="color:var(--java-red); border:none;">Guía de Inicio Rápido</h2>
-        <p>Ejecuta el SDK descargado en tu terminal:</p>
-        <div class="code-block">python "tu_archivo.py"</div>
-        <button class="btn-download" style="font-size:14px; padding:10px 20px;" onclick="closeModal()">Entendido</button>
+    <div id="download-page" class="page">
+        <div class="container">
+            <h2 style="margin-top: 20px;">Repositorio de Descargas</h2>
+            <div class="main-grid">
+                <div>
+                    <div class="search-box">
+                        <label>Buscar:</label>
+                        <input type="text" id="search" placeholder="Ej: bpp 0.3" oninput="filterFiles()">
+                    </div>
+                    <ul id="lista" class="file-list"></ul>
+                    <div id="not-found" class="error-container">
+                        <img src="web/mr.Stick/404.png" alt="404">
+                        <h3>404 | Recurso no encontrado</h3>
+                    </div>
+                </div>
+                <aside class="sidebar">
+                    <h3>Soporte Técnico</h3>
+                    <a href="https://github.com/loslocos817yt-star/Bpp/tree/main/Descargas" style="color:var(--java-blue); font-size:13px; display:block; margin-bottom:15px;">Ir al repositorio GitHub</a>
+                </aside>
+            </div>
+            <p><a href="#" onclick="showHome()" style="color:var(--java-blue); font-size:14px;">« Volver a la página de inicio</a></p>
+        </div>
     </div>
-</div>
 
-<footer>
-    <div class="container">© 2026 B++ CORE // DEVELOPED BY INSANO DE CARTÓN_MC</div>
-</footer>
+    <div id="instruccionesModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="color:var(--java-red); border:none;">Guía de Inicio Rápido</h2>
+            <p>Siga estos pasos para ejecutar B++ en su entorno:</p>
+            <div class="code-block">python "nombre_del_sdk.py"</div>
+            <p style="font-size: 14px;">El SDK abrirá automáticamente el Project Manager v0.3.</p>
+            <button class="btn-download" style="font-size:14px; padding:10px 20px;" onclick="closeModal()">Entendido</button>
+        </div>
+    </div>
 
-<script>
-    let allFiles = [];
-    const modal = document.getElementById("instruccionesModal");
+    <footer>
+        <div class="container">© 2026 B++ CORE // DEVELOPED BY INSANO DE CARTÓN_MC</div>
+    </footer>
 
-    function openModal() { modal.style.display = "block"; }
-    function closeModal() { modal.style.display = "none"; }
-    window.onclick = function(event) { if (event.target == modal) closeModal(); }
+    <script>
+        let allFiles = [];
+        const modal = document.getElementById("instruccionesModal");
 
-    function showDownloads() {
-        document.getElementById('home').classList.remove('active');
-        document.getElementById('download-page').classList.add('active');
-        loadFiles();
-    }
+        function openModal() { modal.style.display = "block"; }
+        function closeModal() { modal.style.display = "none"; }
+        window.onclick = function(event) { if (event.target == modal) closeModal(); }
 
-    function showHome() {
-        document.getElementById('download-page').classList.remove('active');
-        document.getElementById('home').classList.add('active');
-    }
-
-    async function loadFiles() {
-        const lista = document.getElementById('lista');
-        lista.innerHTML = '<li style="padding:20px; text-align:center;">Cargando archivos...</li>';
-        try {
-            // Intenta leer el directorio. Nota: GitHub Pages requiere que el repo tenga index o usar la API.
-            // Si lo pruebas localmente, asegúrate de que la carpeta Descargas exista.
-            const res = await fetch('Descargas/');
-            const text = await res.text();
-            const html = new DOMParser().parseFromString(text, 'text/html');
-            allFiles = Array.from(html.querySelectorAll('a'))
-                .map(a => a.getAttribute('href'))
-                .filter(n => n && n.toLowerCase().endsWith('.py'))
-                .map(f => decodeURIComponent(f).split('/').pop());
-
-            renderFiles(allFiles);
-        } catch (e) {
-            lista.innerHTML = '<li style="padding:20px; text-align:center; color:red;">No se pudo conectar con el servidor de archivos.</li>';
+        function showDownloads() {
+            document.getElementById('home').classList.remove('active');
+            document.getElementById('download-page').classList.add('active');
+            loadFiles();
         }
-    }
 
-    function renderFiles(files) {
-        const lista = document.getElementById('lista');
-        const notFound = document.getElementById('not-found');
-        lista.innerHTML = '';
-        if (files.length === 0) {
-            lista.style.display = 'none';
-            notFound.style.display = 'block';
-        } else {
-            lista.style.display = 'block';
-            notFound.style.display = 'none';
-            files.forEach(name => {
-                const li = document.createElement('li');
-                li.className = 'file-item';
-                li.innerHTML = `<div><b>${name}</b><span style="font-size:12px;color:#888;">SDK Oficial</span></div><a href="Descargas/${name}" download class="dl-link">Descargar</a>`;
-                lista.appendChild(li);
-            });
+        function showHome() {
+            document.getElementById('download-page').classList.remove('active');
+            document.getElementById('home').classList.add('active');
         }
-    }
 
-    function filterFiles() {
-        const query = document.getElementById('search').value.toLowerCase();
-        const filtered = allFiles.filter(f => f.toLowerCase().includes(query));
-        renderFiles(filtered);
-    }
-</script>
+        async function loadFiles() {
+            const lista = document.getElementById('lista');
+            try {
+                const res = await fetch('Descargas/');
+                const text = await res.text();
+                const html = new DOMParser().parseFromString(text, 'text/html');
+                allFiles = Array.from(html.querySelectorAll('a'))
+                    .map(a => a.getAttribute('href'))
+                    .filter(n => n && n.toLowerCase().endsWith('.py'))
+                    .map(f => decodeURIComponent(f).split('/').pop());
+                renderFiles(allFiles);
+            } catch (e) {
+                lista.innerHTML = '<li>Error de conexión.</li>';
+            }
+        }
+
+        function renderFiles(files) {
+            const lista = document.getElementById('lista');
+            const notFound = document.getElementById('not-found');
+            lista.innerHTML = '';
+            if (files.length === 0) {
+                lista.style.display = 'none';
+                notFound.style.display = 'block';
+            } else {
+                lista.style.display = 'block';
+                notFound.style.display = 'none';
+                files.forEach(name => {
+                    const li = document.createElement('li');
+                    li.className = 'file-item';
+                    li.innerHTML = `<div><b>${name}</b><span>SDK Oficial</span></div><a href="Descargas/${name}" download class="dl-link">Descargar</a>`;
+                    lista.appendChild(li);
+                });
+            }
+        }
+
+        function filterFiles() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const filtered = allFiles.filter(f => f.toLowerCase().includes(query));
+            renderFiles(filtered);
+        }
+    </script>
 </body>
 </html>
