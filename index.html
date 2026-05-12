@@ -28,7 +28,8 @@
         .search-box input { flex-grow: 1; padding: 8px; border: 1px solid #ccc; outline: none; }
         .file-list { list-style: none; padding: 0; border: 1px solid #EEE; border-radius: 4px; }
         .file-item { padding: 20px; border-bottom: 1px solid #EEE; display: flex; justify-content: space-between; align-items: center; background: #fff; }
-        .dl-link { background: var(--java-blue); color: white; text-decoration: none; padding: 8px 20px; font-size: 13px; font-weight: bold; border-radius: 3px; }
+        .dl-link { background: var(--java-blue); color: white; text-decoration: none; padding: 8px 20px; font-size: 13px; font-weight: bold; border-radius: 3px; border: none; cursor: pointer; }
+        .dl-link:hover { background: #1a5276; }
         footer { background: #333; color: #ccc; text-align: center; padding: 30px 0; margin-top: 60px; font-size: 12px; }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
         .modal-content { background: white; margin: 10% auto; padding: 30px; width: 80%; max-width: 600px; border-radius: 8px; position: relative; }
@@ -61,7 +62,7 @@
             <h3>Soporte</h3>
             <ul>
                 <li class="link-action" onclick="openModal()">Instrucciones de instalación</li>
-                <li><a href="https://github.com/loslocos817yt-star/Bpp/tree/main/Descargas" style="color:var(--java-blue);">Soporte de GitHub</a></li>
+                <li><a href="https://github.com/loslocos817yt-star/Bpp/tree/main/Descargas" style="color:var(--java-blue); text-decoration: underline;">Soporte de GitHub</a></li>
             </ul>
         </aside>
     </div>
@@ -69,21 +70,21 @@
 
 <div id="download-page" class="page">
     <div class="container">
-        <h2>Repositorio de Descargas (GitHub API)</h2>
+        <h2 style="margin-top: 20px;">Repositorio de Descargas Oficial</h2>
         <div class="search-box">
             <label>Buscar:</label>
             <input type="text" id="search" placeholder="Ej: bpp 0.3" oninput="filterFiles()">
         </div>
         <ul id="lista" class="file-list"></ul>
-        <p><a href="#" onclick="showHome()" style="color:var(--java-blue);">« Volver al inicio</a></p>
+        <p><a href="#" onclick="showHome()" style="color:var(--java-blue); font-size: 14px; display: inline-block; margin-top: 20px;">« Volver a la página de inicio</a></p>
     </div>
 </div>
 
 <div id="instruccionesModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Guía de Inicio Rápido</h2>
-        <p>Ejecuta el archivo descargado con:</p>
+        <h2 style="color:var(--java-red); border:none;">Guía de Inicio Rápido</h2>
+        <p>Ejecuta el archivo descargado en tu terminal:</p>
         <div class="code-block">python "tu_archivo.py"</div>
         <button class="btn-download" style="font-size:14px; padding:10px 20px;" onclick="closeModal()">Entendido</button>
     </div>
@@ -118,7 +119,7 @@
         const repo = "Bpp";
         const path = "Descargas";
         
-        lista.innerHTML = '<li style="padding:20px;">Conectando con GitHub API...</li>';
+        lista.innerHTML = '<li style="padding:20px; text-align:center;">Sincronizando con el repositorio...</li>';
 
         try {
             const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}`);
@@ -133,10 +134,10 @@
                     }));
                 renderFiles(allFiles);
             } else {
-                lista.innerHTML = '<li style="padding:20px;">Error: Carpeta no encontrada en el repo.</li>';
+                lista.innerHTML = '<li style="padding:20px;">Error: No se pudo acceder a la carpeta de descargas.</li>';
             }
         } catch (e) {
-            lista.innerHTML = '<li style="padding:20px;">Error de conexión con la API.</li>';
+            lista.innerHTML = '<li style="padding:20px;">Error de conexión con la API de GitHub.</li>';
         }
     }
 
@@ -144,15 +145,36 @@
         const lista = document.getElementById('lista');
         lista.innerHTML = '';
         if (files.length === 0) {
-            lista.innerHTML = '<li style="padding:20px;">No se encontraron archivos .py</li>';
+            lista.innerHTML = '<li style="padding:20px;">No se encontraron archivos disponibles.</li>';
             return;
         }
         files.forEach(file => {
             const li = document.createElement('li');
             li.className = 'file-item';
-            li.innerHTML = `<div><b>${file.name}</b></div><a href="${file.url}" download class="dl-link">Descargar</a>`;
+            li.innerHTML = `
+                <div><b>${file.name}</b><br><span style="font-size:12px;color:#888;">SDK Oficial</span></div>
+                <button onclick="forzarDescarga('${file.url}', '${file.name}')" class="dl-link">
+                    Descargar
+                </button>
+            `;
             lista.appendChild(li);
         });
+    }
+
+    async function forzarDescarga(url, filename) {
+        try {
+            const res = await fetch(url);
+            const blob = await res.blob();
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(link.href);
+        } catch (e) {
+            window.open(url, '_blank');
+        }
     }
 
     function filterFiles() {
