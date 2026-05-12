@@ -35,6 +35,7 @@
             padding: 0 20px;
         }
 
+        /* HEADER */
         header {
             background: var(--bg-gray);
             border-bottom: 4px solid var(--java-red);
@@ -64,6 +65,7 @@
             margin-bottom: 30px;
         }
 
+        /* BOTONES */
         .btn-download {
             background: var(--java-red);
             color: white;
@@ -82,6 +84,7 @@
             background: #ff5e4d;
         }
 
+        /* SECCIONES */
         .page {
             display: none;
             padding: 40px 0;
@@ -105,6 +108,7 @@
             margin-top: 0;
         }
 
+        /* SIDEBAR */
         .sidebar {
             background: #F9F9F9;
             padding: 25px;
@@ -151,6 +155,7 @@
             color: var(--java-red);
         }
 
+        /* LISTA ARCHIVOS */
         .search-box {
             background: #eee;
             padding: 15px;
@@ -194,6 +199,7 @@
             border-radius: 3px;
         }
 
+        /* MODAL */
         .modal {
             display: none;
             position: fixed;
@@ -210,7 +216,7 @@
             margin: 10% auto;
             padding: 30px;
             width: 80%;
-            max-width: 700px;
+            max-width: 600px;
             border-radius: 8px;
             position: relative;
         }
@@ -234,6 +240,7 @@
             line-height: 1.8;
         }
 
+        /* 404 */
         .error-container {
             text-align: center;
             padding: 50px;
@@ -253,10 +260,6 @@
             margin-top: 60px;
             font-size: 12px;
         }
-
-        ul li {
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 
@@ -266,6 +269,7 @@
     Información de seguridad: Mantenga su entorno B++ actualizado para mejorar el rendimiento.
 </div>
 
+<!-- HOME -->
 <div id="home" class="page active">
 
     <header>
@@ -296,15 +300,13 @@
 
             <p>
                 B++ permite optimizar flujos de trabajo mediante transpilación cruzada de alto nivel.
-                Al descargar B++, accede al núcleo PattitexTEC, diseñado para ofrecer velocidad nativa
-                con sintaxis moderna.
+                Al descargar B++, accede al núcleo PattitexTEC, diseñado para ofrecer velocidad nativa con sintaxis moderna.
             </p>
 
             <h2>¿Cómo usar B++?</h2>
 
             <p>
                 B++ usa una sintaxis simple enfocada en terminales móviles como Pydroid 3 y Termux.
-                Puede crear variables, mostrar texto, hacer preguntas, usar colores y ejecutar condiciones.
             </p>
 
             <h3>Ejemplo básico</h3>
@@ -314,32 +316,33 @@
 <br>
 &nbsp;&nbsp;val nombre = "Doryan"
 <br>
-&nbsp;&nbsp;text("Hola") -> VERDE
+&nbsp;&nbsp;text("Hola Mundo") -> VERDE
 <br>
 &nbsp;&nbsp;text(nombre)
 <br>
 }
             </div>
 
-            <h3>Comandos principales</h3>
+            <h3>Variables</h3>
 
-            <ul>
-                <li><b>val</b> → Crear variables</li>
-                <li><b>text()</b> → Mostrar texto en consola</li>
-                <li><b>preguntar()</b> → Pedir datos al usuario</li>
-                <li><b>si</b> → Ejecutar condiciones</li>
-                <li><b>esperar()</b> → Pausar ejecución</li>
-                <li><b>limpiar</b> → Limpiar terminal</li>
-            </ul>
+            <div class="code-block">
+{
+<br>
+&nbsp;&nbsp;val numero = 10
+<br>
+&nbsp;&nbsp;text(numero)
+<br>
+}
+            </div>
 
             <h3>Entrada de usuario</h3>
 
             <div class="code-block">
 {
 <br>
-&nbsp;&nbsp;preguntar("Como te llamas?") -> nombre
+&nbsp;&nbsp;preguntar("Como te llamas?") -> usuario
 <br>
-&nbsp;&nbsp;text(nombre) -> CYAN
+&nbsp;&nbsp;text(usuario) -> CYAN
 <br>
 }
             </div>
@@ -356,11 +359,31 @@
 }
             </div>
 
+            <h3>Esperas</h3>
+
+            <div class="code-block">
+{
+<br>
+&nbsp;&nbsp;text("Cargando...")
+<br>
+&nbsp;&nbsp;esperar(2)
+<br>
+&nbsp;&nbsp;text("Listo")
+<br>
+}
+            </div>
+
             <h3>Colores disponibles</h3>
 
-            <p>
-                ROJO, VERDE, AZUL, AMARILLO, CYAN, MAGENTA y GRIS.
-            </p>
+            <ul>
+                <li>ROJO</li>
+                <li>VERDE</li>
+                <li>AZUL</li>
+                <li>AMARILLO</li>
+                <li>CYAN</li>
+                <li>MAGENTA</li>
+                <li>GRIS</li>
+            </ul>
 
             <h3>Compilación</h3>
 
@@ -369,20 +392,6 @@
                 <li>C++ (.cpp)</li>
                 <li>Binario (.bin)</li>
             </ul>
-
-            <h3>Estructura recomendada</h3>
-
-            <div class="code-block">
-{
-<br>
-&nbsp;&nbsp;// Comentario
-<br>
-&nbsp;&nbsp;val numero = 10
-<br>
-&nbsp;&nbsp;text(numero)
-<br>
-}
-            </div>
 
         </section>
 
@@ -419,6 +428,118 @@
 
 </div>
 
+<!-- DESCARGAS -->
+<div id="download-page" class="page">
+
+    <div class="container">
+
+        <h2 style="margin-top: 20px;">Repositorio de Descargas</h2>
+
+        <div class="main-grid">
+
+            <div>
+
+                <div class="search-box">
+                    <label>Buscar:</label>
+
+                    <input type="text"
+                           id="search"
+                           placeholder="Ej: bpp 0.3"
+                           oninput="filterFiles()">
+                </div>
+
+                <ul id="lista" class="file-list"></ul>
+
+                <div id="not-found" class="error-container">
+                    <img src="web/mr.Stick/404.png" alt="404">
+
+                    <h3>404 | Recurso no encontrado</h3>
+                </div>
+
+            </div>
+
+            <aside class="sidebar">
+
+                <h3>Soporte Técnico</h3>
+
+                <a href="https://github.com/loslocos817yt-star/Bpp/tree/main/Descargas"
+                   style="color:var(--java-blue); font-size:13px; display:block; margin-bottom:15px;">
+                    Ir al repositorio GitHub
+                </a>
+
+                <h3>Contacto</h3>
+
+                <a href="mailto:loslocos817yt@gmail.com" class="mail-link">
+                    loslocos817yt@gmail.com
+                </a>
+
+                <a href="mailto:doryansanchez72@gmail.com" class="mail-link">
+                    doryansanchez72@gmail.com
+                </a>
+
+            </aside>
+
+        </div>
+
+        <p>
+            <a href="#"
+               onclick="showHome()"
+               style="color:var(--java-blue); font-size:14px;">
+                « Volver a la página de inicio
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+<!-- MODAL -->
+<div id="instruccionesModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">&times;</span>
+
+        <h2 style="color:var(--java-red); border:none;">
+            Guía de Inicio Rápido
+        </h2>
+
+        <p>Siga estos pasos para ejecutar B++ en su entorno:</p>
+
+        <b>1. Descarga el archivo:</b>
+
+        <p>
+            Vaya a la sección de descargas y baje la versión más reciente.
+        </p>
+
+        <b>2. Ejecución:</b>
+
+        <p>
+            Abra Pydroid 3 o Termux y ejecute:
+        </p>
+
+        <div class="code-block">
+python "nombre_del_archivo.py"
+        </div>
+
+        <b>3. ¡Listo!</b>
+
+        <p>
+            B++ cargará el motor automáticamente.
+        </p>
+
+        <button class="btn-download"
+                style="font-size:14px; padding:10px 20px;"
+                onclick="closeModal()">
+
+            Entendido
+
+        </button>
+
+    </div>
+
+</div>
+
 <footer>
     <div class="container">
         © 2026 B++ CORE // DEVELOPED BY INSANO DE CARTÓN_MC
@@ -426,13 +547,112 @@
 </footer>
 
 <script>
-    function showDownloads() {
-        alert("Sistema de descargas cargado.");
-    }
 
-    function openModal() {
-        alert("Use Python para ejecutar los archivos .py de B++");
+let allFiles = [];
+
+const modal = document.getElementById("instruccionesModal");
+
+function openModal() {
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) closeModal();
+}
+
+function showDownloads() {
+    document.getElementById('home').classList.remove('active');
+    document.getElementById('download-page').classList.add('active');
+    loadFiles();
+}
+
+function showHome() {
+    document.getElementById('download-page').classList.remove('active');
+    document.getElementById('home').classList.add('active');
+}
+
+async function loadFiles() {
+
+    const lista = document.getElementById('lista');
+
+    try {
+
+        const res = await fetch('Descargas/');
+        const text = await res.text();
+
+        const html = new DOMParser().parseFromString(text, 'text/html');
+
+        allFiles = Array.from(html.querySelectorAll('a'))
+            .map(a => a.getAttribute('href'))
+            .filter(n => n && n.toLowerCase().endsWith('.py'))
+            .map(f => decodeURIComponent(f).split('/').pop());
+
+        renderFiles(allFiles);
+
+    } catch (e) {
+
+        lista.innerHTML = '<li>Error de conexión.</li>';
+
     }
+}
+
+function renderFiles(files) {
+
+    const lista = document.getElementById('lista');
+    const notFound = document.getElementById('not-found');
+
+    lista.innerHTML = '';
+
+    if (files.length === 0) {
+
+        lista.style.display = 'none';
+        notFound.style.display = 'block';
+
+    } else {
+
+        lista.style.display = 'block';
+        notFound.style.display = 'none';
+
+        files.forEach(name => {
+
+            const li = document.createElement('li');
+
+            li.className = 'file-item';
+
+            li.innerHTML = `
+                <div>
+                    <b>${name}</b>
+                    <span>SDK Oficial</span>
+                </div>
+
+                <a href="Descargas/${name}"
+                   download
+                   class="dl-link">
+                    Descargar
+                </a>
+            `;
+
+            lista.appendChild(li);
+
+        });
+    }
+}
+
+function filterFiles() {
+
+    const query = document.getElementById('search').value.toLowerCase();
+
+    const filtered = allFiles.filter(f =>
+        f.toLowerCase().includes(query)
+    );
+
+    renderFiles(filtered);
+}
+
 </script>
 
 </body>
