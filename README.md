@@ -17,6 +17,7 @@
 
 ## 📝 Ejemplo de código
 ```text
+$Name$: Prueba
 {
   text ("Iniciando B++...") -> VERDE
   val nombre = "Insano"
