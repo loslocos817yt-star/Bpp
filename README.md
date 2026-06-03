@@ -12,7 +12,7 @@
 * **Transpilación Nativa:** Convierte código `.bpp` a **Python** o **C++** ejecutable.
 * **Sistema de Memoria:** Gestión de variables con `val` y `preguntar`.
 * **Control de Flujo:** Estructuras de bucles (`Repetir`/`FB`) y condicionales (`si`).
-* **Ligero:** Arquitectura ultra compacta de 14KB. ¡Sin bloatware!
+* **Ligero:** Arquitectura ultra compacta de 19KB en la 0.7 ¡Sin bloatware!
 * **Portabilidad:** Diseñado para funcionar 100% en Android.
 
 ---
