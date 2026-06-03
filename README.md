@@ -9,12 +9,6 @@
 
 ---
 
-## ⚡ Características
-* **Auto-sangría:** Editor integrado que maneja bloques `{ }` automáticamente.
-* **Sistema de Colores:** Soporte para textos en ROJO, VERDE, AZUL, y más.
-* **Transpilador:** Exporta tus proyectos `.bpp` a código real en `.py` (Python) o `.cpp` (C++).
-* **Gestor de Proyectos:** Crea, edita y borra proyectos fácilmente.
-
 ## 📝 Ejemplo de código
 ```text
 $Name$: Prueba
