@@ -1,1 +1,1 @@
-**Esta carpeta es exclusiva de archivos de descarga de termux**
+**Esta carpeta es exclusiva de archivos de descarga de B++ en termux**
