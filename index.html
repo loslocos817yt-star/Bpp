@@ -28,30 +28,19 @@
         .page { display: none; padding: 40px 0; min-height: 400px; }
         .active { display: block; }
         .main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
-        h2 { border-bottom: 1px solid #ccc; padding-bottom: 10px; color: var(--java-blue); margin-top: 30px; }
-        h2:first-child { margin-top: 0; }
-
+        
         .sidebar { background: #F9F9F9; padding: 25px; border: 1px solid #DDD; height: fit-content; }
         .sidebar h3 { font-size: 17px; margin-top: 20px; color: #E67E22; border-bottom: 1px solid #eee; }
         .sidebar h3:first-child { margin-top: 0; }
         .sidebar ul { padding-left: 20px; font-size: 14px; }
         .sidebar li { margin-bottom: 12px; }
-        .link-action { color: var(--java-blue); text-decoration: underline; cursor: pointer; }
         .mail-link { color: #555; text-decoration: none; font-size: 12px; display: block; margin-bottom: 5px; word-break: break-all; }
-
-        .code-block { background: #1a1a1a;
-border-left: 4px solid var(--java-red); color: #7f7; padding: 15px; font-family: monospace; border-radius: 4px; overflow-x: auto; margin: 10px 0; line-height: 1.6; }
-        .cmd-label { color: #E67E22; font-weight: bold; font-size: 14px; display: block; margin-top: 15px; }
 
         .search-box { background: #eee; padding: 15px; margin-bottom: 20px; border-radius: 4px; display: flex; align-items: center; gap: 10px; }
         .search-box input { flex-grow: 1; padding: 8px; border: 1px solid #ccc; outline: none; }
         .file-list { list-style: none; padding: 0; border: 1px solid #EEE; border-radius: 4px; }
         .file-item { padding: 20px; border-bottom: 1px solid #EEE; display: flex; justify-content: space-between; align-items: center; background: #fff; }
         .dl-link { background: var(--java-blue); color: white; text-decoration: none; padding: 8px 20px; font-size: 13px; font-weight: bold; border-radius: 3px; }
-
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
-        .modal-content { background: white; margin: 10% auto; padding: 30px; width: 80%; max-width: 600px; border-radius: 8px; position: relative; }
-        .close { position: absolute; right: 20px; top: 10px; font-size: 28px; cursor: pointer; }
 
         .error-container { text-align: center; padding: 50px; display: none; }
         .error-container img { width: 180px; margin-bottom: 20px; }
@@ -77,108 +66,11 @@ border-left: 4px solid var(--java-red); color: #7f7; padding: 15px; font-family:
 
         <div class="container main-grid" style="margin-top: 40px;">
             <section>
-                <h2>¿Cómo usar B++?</h2>
-                <p>B++ utiliza una sintaxis simplificada para manejar variables, entradas y lógica de colores en terminal.</p>
-                
-                <span class="cmd-label">// Definición de Variables y Texto con Colores</span>
-                <div class="code-block">
-                    {<br>
-                    &nbsp;&nbsp;val nombre = "Doryan"<br>
-                    &nbsp;&nbsp;text("Hola Mundo") -> VERDE<br>
-                    &nbsp;&nbsp;text(nombre)<br>
-                    }
-                </div>
-
-                <span class="cmd-label">// Entrada de Usuario (Input)</span>
-                <div class="code-block">
-                    {<br>
-                    &nbsp;&nbsp;preguntar("Como te llamas?") -> usuario<br>
-                    &nbsp;&nbsp;text(usuario) -> CYAN<br>
-                    }
-                </div>
-
-                <span class="cmd-label">// Lógica Condicional</span>
-                <div class="code-block">
-                    {<br>
-                    &nbsp;&nbsp;val admin = "si"<br>
-                    &nbsp;&nbsp;si admin == "si" -> text("Acceso permitido") -> VERDE<br>
-                    }
-                </div>
-            <h2>¿Cómo programo?</h2>
-
-            <p>B++ usa comandos simples inspirados en scripting clásico.</p>
-
-            <h3>Variables</h3>
-            <div class="code-block">
-            {<br>&nbsp;&nbsp;val nombre = "Coffi"<br>&nbsp;&nbsp;val edad = 15<br>}
-            </div>
-
-            <h3>Mostrar texto</h3>
-            <div class="code-block">
-            {<br>&nbsp;&nbsp;text("Hola mundo")<br>&nbsp;&nbsp;text("Texto verde") -> VERDE<br>}
-            </div>
-
-            <h3>Preguntar datos</h3>
-            <div class="code-block">
-            {<br>&nbsp;&nbsp;preguntar("¿Cómo te llamas?") -> usuario<br>&nbsp;&nbsp;text(usuario)<br>}
-            </div>
-
-            <h3>Esperar tiempo</h3>
-            <div class="code-block">
-            {<br>&nbsp;&nbsp;text("Esperando...")<br>&nbsp;&nbsp;esperar(2)<br>&nbsp;&nbsp;text("Listo")<br>}
-            </div>
-
-            <h3>Limpiar pantalla</h3>
-            <div class="code-block">
-            {<br>&nbsp;&nbsp;limpiar<br>}
-            </div>
-
-            <h3>Condicionales</h3>
-            <div class="code-block">
-            {<br>&nbsp;&nbsp;preguntar("Contraseña") -> clave<br>&nbsp;&nbsp;si clave == "1234" -> text("Acceso permitido") -> VERDE<br>}
-            </div>
-
-            <h3>Matemáticas</h3>
-            <div class="code-block">
-            {<br>&nbsp;&nbsp;val x = 5<br>&nbsp;&nbsp;val y = 10<br>&nbsp;&nbsp;text(x+y)<br>}
-            </div>
-
-            <h3>Librería mate.py</h3>
-            <div class="code-block">
-            {<br>&nbsp;&nbsp;mate(5+5*10) -> resultado<br>&nbsp;&nbsp;text(resultado)<br>}
-            </div>
-
-            <h3>Sonidos</h3>
-            <div class="code-block">
-            {<br>&nbsp;&nbsp;pitido(1000) -> 1<br>}
-            </div>
-
-            <h3>Colores disponibles</h3>
-            <div class="code-block">
-            ROJO<br>
-            VERDE<br>
-            AZUL<br>
-            AMARILLO<br>
-            CYAN<br>
-            MAGENTA<br>
-            GRIS
-            </div>
-
-            <h3>Editor integrado</h3>
-            <div class="code-block">
-            RUN = Ejecutar proyecto<br>
-            SAVE = Guardar proyecto<br>
-            DEL = Borrar última línea<br>
-            EDIT = Editar línea<br>
-            EXIT = Salir del editor
-            </div>
-
-            </section>
+                </section>
             
             <aside class="sidebar">
                 <h3>Soporte</h3>
                 <ul>
-                    <li class="link-action" onclick="openModal()">Instrucciones de instalación</li>
                     <li><a href="https://github.com/loslocos817yt-star/Bpp/tree/main/Descargas" style="color:var(--java-blue); text-decoration: underline;">Soporte de GitHub</a></li>
                 </ul>
                 <h3>Contacto Directo</h3>
@@ -212,28 +104,12 @@ border-left: 4px solid var(--java-red); color: #7f7; padding: 15px; font-family:
         </div>
     </div>
 
-    <div id="instruccionesModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 style="color:var(--java-red); border:none;">Guía de Inicio Rápido</h2>
-            <p>Siga estos pasos para ejecutar B++ en su entorno:</p>
-            <div class="code-block">python "nombre_del_sdk.py"</div>
-            <p style="font-size: 14px;">El SDK abrirá automáticamente el Project Manager v0.3.</p>
-            <button class="btn-download" style="font-size:14px; padding:10px 20px;" onclick="closeModal()">Entendido</button>
-        </div>
-    </div>
-
     <footer>
         <div class="container">© 2026 B++ CORE // DEVELOPED BY INSANO DE CARTÓN_MC</div>
     </footer>
 
     <script>
         let allFiles = [];
-        const modal = document.getElementById("instruccionesModal");
-
-        function openModal() { modal.style.display = "block"; }
-        function closeModal() { modal.style.display = "none"; }
-        window.onclick = function(event) { if (event.target == modal) closeModal(); }
 
         function showDownloads() {
             document.getElementById('home').classList.remove('active');
