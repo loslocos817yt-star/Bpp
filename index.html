@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -77,6 +78,102 @@ border-left: 4px solid var(--java-red); color: #7f7; padding: 15px; font-family:
 
         <div class="container main-grid" style="margin-top: 40px;">
             <section>
+                <h2>¿Cómo usar B++?</h2>
+                <p>B++ utiliza una sintaxis simplificada para manejar variables, entradas y lógica de colores en terminal.</p>
+                
+                <span class="cmd-label">// Definición de Variables y Texto con Colores</span>
+                <div class="code-block">
+                    {<br>
+                    &nbsp;&nbsp;val nombre = "Doryan"<br>
+                    &nbsp;&nbsp;text("Hola Mundo") -> VERDE<br>
+                    &nbsp;&nbsp;text(nombre)<br>
+                    }
+                </div>
+
+                <span class="cmd-label">// Entrada de Usuario (Input)</span>
+                <div class="code-block">
+                    {<br>
+                    &nbsp;&nbsp;preguntar("Como te llamas?") -> usuario<br>
+                    &nbsp;&nbsp;text(usuario) -> CYAN<br>
+                    }
+                </div>
+
+                <span class="cmd-label">// Lógica Condicional</span>
+                <div class="code-block">
+                    {<br>
+                    &nbsp;&nbsp;val admin = "si"<br>
+                    &nbsp;&nbsp;si admin == "si" -> text("Acceso permitido") -> VERDE<br>
+                    }
+                </div>
+            <h2>¿Cómo programo?</h2>
+
+            <p>B++ usa comandos simples inspirados en scripting clásico.</p>
+
+            <h3>Variables</h3>
+            <div class="code-block">
+            {<br>&nbsp;&nbsp;val nombre = "Coffi"<br>&nbsp;&nbsp;val edad = 15<br>}
+            </div>
+
+            <h3>Mostrar texto</h3>
+            <div class="code-block">
+            {<br>&nbsp;&nbsp;text("Hola mundo")<br>&nbsp;&nbsp;text("Texto verde") -> VERDE<br>}
+            </div>
+
+            <h3>Preguntar datos</h3>
+            <div class="code-block">
+            {<br>&nbsp;&nbsp;preguntar("¿Cómo te llamas?") -> usuario<br>&nbsp;&nbsp;text(usuario)<br>}
+            </div>
+
+            <h3>Esperar tiempo</h3>
+            <div class="code-block">
+            {<br>&nbsp;&nbsp;text("Esperando...")<br>&nbsp;&nbsp;esperar(2)<br>&nbsp;&nbsp;text("Listo")<br>}
+            </div>
+
+            <h3>Limpiar pantalla</h3>
+            <div class="code-block">
+            {<br>&nbsp;&nbsp;limpiar<br>}
+            </div>
+
+            <h3>Condicionales</h3>
+            <div class="code-block">
+            {<br>&nbsp;&nbsp;preguntar("Contraseña") -> clave<br>&nbsp;&nbsp;si clave == "1234" -> text("Acceso permitido") -> VERDE<br>}
+            </div>
+
+            <h3>Matemáticas</h3>
+            <div class="code-block">
+            {<br>&nbsp;&nbsp;val x = 5<br>&nbsp;&nbsp;val y = 10<br>&nbsp;&nbsp;text(x+y)<br>}
+            </div>
+
+            <h3>Librería mate.py</h3>
+            <div class="code-block">
+            {<br>&nbsp;&nbsp;mate(5+5*10) -> resultado<br>&nbsp;&nbsp;text(resultado)<br>}
+            </div>
+
+            <h3>Sonidos</h3>
+            <div class="code-block">
+            {<br>&nbsp;&nbsp;pitido(1000) -> 1<br>}
+            </div>
+
+            <h3>Colores disponibles</h3>
+            <div class="code-block">
+            ROJO<br>
+            VERDE<br>
+            AZUL<br>
+            AMARILLO<br>
+            CYAN<br>
+            MAGENTA<br>
+            GRIS
+            </div>
+
+            <h3>Editor integrado</h3>
+            <div class="code-block">
+            RUN = Ejecutar proyecto<br>
+            SAVE = Guardar proyecto<br>
+            DEL = Borrar última línea<br>
+            EDIT = Editar línea<br>
+            EXIT = Salir del editor
+            </div>
+
             </section>
             
             <aside class="sidebar">
