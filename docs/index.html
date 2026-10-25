@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="B++ es un lenguaje de programación desarrollado por Doryan Flores Sánchez para PattitexTEC.">
+    <title>B++ | PattitexTEC</title>
+</head>
+<body><header>
+    <h1>B++</h1>
+    <p>Lenguaje de programación de PattitexTEC</p><nav>
+    <a href="#inicio" data-page="inicio">Inicio</a> |
+    <a href="#caracteristicas" data-page="caracteristicas">Características</a> |
+    <a href="#descargas" data-page="descargas">Descargas</a> |
+    <a href="#librerias" data-page="librerias">Librerías</a> |
+    <a href="#desarrollo" data-page="desarrollo">Desarrollo</a> |
+    <a href="#repositorio" data-page="repositorio">Repositorio</a> |
+    <a href="CPM/index.html">Coffi Package Manager</a>
+</nav>
+
+</header><hr><main>
+    <section id="inicio" data-section>
+        <h2>Bienvenido a B++</h2>    <p>
+        B++ es un lenguaje de programación desarrollado por
+        Doryan Flores Sánchez como parte de los proyectos de PattitexTEC.
+    </p>
+
+    <p>
+        Explora las descargas, conoce el proyecto y descubre su sistema
+        de librerías.
+    </p>
+
+    <p>
+        <a href="#descargas" data-page="descargas">Ver descargas</a>
+    </p>
+</section>
+
+<section id="caracteristicas" data-section hidden>
+    <h2>Características</h2>
+
+    <ul>
+        <li>Disponible para Windows y Termux.</li>
+        <li>Desarrollo independiente.</li>
+        <li>Versiones para distintas plataformas.</li>
+        <li>Sistema de distribución de librerías.</li>
+        <li>Paquetes de librerías en formato .tar.zst.</li>
+    </ul>
+</section>
+
+<section id="descargas" data-section hidden>
+    <h2>Descargas</h2>
+
+    <h3>Windows</h3>
+    <p>Versiones disponibles: 0.1 a 0.9.</p>
+
+    <p>
+        <a href="https://github.com/loslocos817yt-star/Bpp/tree/main/Descargas/Exe">
+            Ver descargas para Windows
+        </a>
+    </p>
+
+    <h3>Termux</h3>
+    <p>Versiones disponibles: 0.1 a 1.5.</p>
+
+    <p>
+        <a href="https://github.com/loslocos817yt-star/Bpp/tree/main/Descargas/Termux">
+            Ver descargas para Termux
+        </a>
+    </p>
+</section>
+
+<section id="librerias" data-section hidden>
+    <h2>Librerías de B++</h2>
+
+    <p>
+        B++ dispone de un sistema de paquetes para distribuir librerías.
+    </p>
+
+    <p>Formato de paquetes: <strong>.tar.zst</strong></p>
+
+    <p>
+        Los paquetes pueden contener un manifest.json y los archivos
+        necesarios para cada librería.
+    </p>
+</section>
+
+<section id="desarrollo" data-section hidden>
+    <h2>Desarrollo</h2>
+
+    <p><strong>Desarrollador:</strong> Doryan Flores Sánchez.</p>
+    <p><strong>Proyecto:</strong> PattitexTEC.</p>
+
+    <p>
+        B++ es un proyecto independiente creado para desarrollar
+        un lenguaje y un ecosistema de herramientas propios.
+    </p>
+
+    <h3>Dato histórico</h3>
+
+    <p>
+        Según el desarrollador, parte del desarrollo ocurrió mientras
+        se inyectaba anestesia en su pito.
+    </p>
+</section>
+
+<section id="repositorio" data-section hidden>
+    <h2>Repositorio oficial</h2>
+
+    <p>
+        Consulta los archivos y las versiones de B++ en GitHub.
+    </p>
+
+    <p>
+        <a href="https://github.com/loslocos817yt-star/Bpp/tree/main">
+            Visitar repositorio de B++
+        </a>
+    </p>
+</section>
+
+</main><hr><footer>
+    <p>B++ | PattitexTEC</p>
+    <p>Desarrollado por Doryan Flores Sánchez.</p>
+    <p><a href="CPM/index.html">Visitar Coffi Package Manager</a></p>
+</footer><script>
+(function () {
+    const sections = document.querySelectorAll("[data-section]");
+
+    function showPage() {
+        const page = location.hash.slice(1) || "inicio";
+        let found = false;
+
+        sections.forEach(function (section) {
+            const active = section.id === page;
+            section.hidden = !active;
+
+            if (active) {
+                found = true;
+            }
+        });
+
+        if (!found) {
+            location.hash = "inicio";
+            return;
+        }
+
+        const titles = {
+            inicio: "Inicio",
+            caracteristicas: "Características",
+            descargas: "Descargas",
+            librerias: "Librerías",
+            desarrollo: "Desarrollo",
+            repositorio: "Repositorio"
+        };
+
+        document.title = "B++ | " + titles[page];
+    }
+
+    window.addEventListener("hashchange", showPage);
+    showPage();
+})();
+</script></body>
+  </html>
