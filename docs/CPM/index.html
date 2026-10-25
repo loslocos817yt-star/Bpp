@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CPM (Coffi Package Manager) - Gestor de paquetes oficial para B++.">
+    <title>CPM | Coffi Package Manager</title>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Fzstd (Descompresor de Zstandard para JS) -->
+    <script src="https://cdn.jsdelivr.net/npm/fzstd@0.1.1/umd/index.js"></script>
+</head>
+<body>
+
+<header>
+    <h1>CPM (Coffi Package Manager)</h1>
+    <p>Repositorio y gestor oficial de librerías para B++</p>
+    <nav>
+        <a href="#subir" data-page="subir">Subir Paquete</a> | 
+        <a href="#librerias" data-page="librerias">Librerías Disponibles</a> | 
+        <a href="https://github.com/loslocos817yt-star/CPM" target="_blank">GitHub del Proyecto</a>
+    </nav>
+</header>
+
+<hr>
+
+<main>
+    <!-- SECCIÓN: SUBIR -->
+    <section id="subir" data-section>
+        <fieldset>
+            <legend><b>Subir Nueva Librería</b></legend>
+            <p>Selecciona tu paquete comprimido en formato <strong>.tar.zst</strong> (máximo 10 KB). Debe incluir su archivo <code>manifest.json</code> dentro.</p>
+            
+            <p>
+                <input type="file" id="fileInput" accept=".zst,.tar.zst">
+            </p>
+            
+            <p>
+                <button type="button" id="uploadBtn" onclick="handleFileUpload()">Subir al Registry de CPM</button>
+            </p>
+
+            <p id="statusMessage" style="display:none; padding: 5px; background-color: #eee; border: 1px solid #ccc;"></p>
+        </fieldset>
+    </section>
+
+    <!-- SECCIÓN: LIBRERÍAS -->
+    <section id="librerias" data-section hidden>
+        <fieldset>
+            <legend><b>Librerías en el Registry</b></legend>
+            
+            <p>
+                <button type="button" onclick="loadPackages()">🔄 Actualizar listado</button>
+            </p>
+
+            <div id="packagesList">
+                <p>Leyendo paquetes y manifests desde Supabase Storage...</p>
+            </div>
+        </fieldset>
+    </section>
+</main>
+
+<hr>
+
+<footer>
+    <p><b>CPM</b> | Coffi Package Manager &bull; Formato: <code>.tar.zst</code></p>
+    <p>Desarrollado para el ecosistema de B++.</p>
+</footer>
+
+<script>
+// Enrutador de pestañas nativo
+(function () {
+    const sections = document.querySelectorAll("[data-section]");
+
+    function showPage() {
+        const page = location.hash.slice(1) || "subir";
+        let found = false;
+
+        sections.forEach(function (section) {
+            const active = section.id === page;
+            section.hidden = !active;
+            if (active) found = true;
+        });
+
+        if (!found) {
+            location.hash = "subir";
+        }
+    }
+
+    window.addEventListener("hashchange", showPage);
+    showPage();
+})();
+
+// Configuración de Supabase
+const SUPABASE_URL = 'https://atfaqhirgylncdakummk.supabase.co'
+const SUPABASE_KEY = 'sb_publishable_bbvcO-7NmFnzpVB1IgHCVQ_-usXqaJk'
+const BUCKET_NAME = 'librerias'
+const MAX_SIZE_BYTES = 10 * 1024 // 10 KB
+
+const { createClient } = supabase
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+window.addEventListener('DOMContentLoaded', () => {
+    loadPackages()
+})
+
+// Extraer y parsear el manifest.json interno del archivo .tar.zst
+async function extractManifest(arrayBuffer) {
+    try {
+        const u8arr = new Uint8Array(arrayBuffer)
+        const decompressedTar = fzstd.decompress(u8arr)
+
+        let offset = 0
+        while (offset < decompressedTar.length) {
+            const nameBytes = decompressedTar.subarray(offset, offset + 100)
+            let name = ''
+            for (let i = 0; i < 100; i++) {
+                if (nameBytes[i] === 0) break
+                name += String.fromCharCode(nameBytes[i])
+            }
+
+            if (!name) break
+
+            const sizeStrBytes = decompressedTar.subarray(offset + 124, offset + 136)
+            let sizeStr = ''
+            for (let i = 0; i < 12 && sizeStrBytes[i] >= 48; i++) {
+                sizeStr += String.fromCharCode(sizeStrBytes[i])
+            }
+            const fileSize = parseInt(sizeStr.trim(), 8) || 0
+            const contentOffset = offset + 512
+
+            if (name.includes('manifest.json')) {
+                const contentBytes = decompressedTar.subarray(contentOffset, contentOffset + fileSize)
+                const jsonString = new TextDecoder().decode(contentBytes)
+                return JSON.parse(jsonString)
+            }
+
+            offset = contentOffset + (Math.ceil(fileSize / 512) * 512)
+        }
+    } catch (e) {
+        console.error('Error al extraer manifest:', e)
+    }
+    return null
+}
+
+// Listar paquetes del Storage y leer su manifest interno
+async function loadPackages() {
+    const listContainer = document.getElementById('packagesList')
+    listContainer.innerHTML = '<p>Buscando librerías y leyendo sus manifests...</p>'
+
+    const { data: files, error } = await supabaseClient.storage
+        .from(BUCKET_NAME)
+        .list('uploads', {
+            limit: 100,
+            sortBy: { column: 'created_at', order: 'desc' }
+        })
+
+    if (error) {
+        listContainer.innerHTML = `<p style="color: red;">Error al listar: ${error.message}</p>`
+        return
+    }
+
+    const validFiles = files.filter(f => f.name !== '.emptyFolderPlaceholder')
+
+    if (validFiles.length === 0) {
+        listContainer.innerHTML = '<p>No hay librerías subidas todavía en uploads/.</p>'
+        return
+    }
+
+    let html = ''
+
+    for (const file of validFiles) {
+        const filePath = `uploads/${file.name}`
+        
+        const { data: fileBlob, error: downloadError } = await supabaseClient.storage
+            .from(BUCKET_NAME)
+            .download(filePath)
+
+        let manifest = { name: file.name.replace('.tar.zst', ''), version: '1.0.0', description: 'Sin descripción en manifest', main: 'src/main.py' }
+
+        if (!downloadError && fileBlob) {
+            const buffer = await fileBlob.arrayBuffer()
+            const parsedManifest = await extractManifest(buffer)
+            if (parsedManifest) {
+                manifest = parsedManifest
+            }
+        }
+
+        const sizeKB = file.metadata?.size ? (file.metadata.size / 1024).toFixed(1) : '?'
+
+        html += `
+            <fieldset style="margin-bottom: 10px; background: #fafafa;">
+                <legend><b>${manifest.name}</b> (v${manifest.version})</legend>
+                <p><b>Descripción:</b> ${manifest.description}</p>
+                <p><b>Archivo principal:</b> <code>${manifest.main || 'N/A'}</code></p>
+                <p><b>Comando de instalación:</b><br><code>coffi install ${manifest.name}</code></p>
+                <p><b>Tamaño del paquete:</b> ${sizeKB} KB &bull; <b>Archivo:</b> ${file.name}</p>
+                <p><button type="button" onclick="downloadPackage('${filePath}')">Descargar .tar.zst</button></p>
+            </fieldset>
+        `
+    }
+
+    listContainer.innerHTML = html
+}
+
+// Descargar archivo mediante enlace firmado
+async function downloadPackage(filePath) {
+    const { data, error } = await supabaseClient.storage
+        .from(BUCKET_NAME)
+        .createSignedUrl(filePath, 60)
+
+    if (error) {
+        alert('Error al generar enlace: ' + error.message)
+        return
+    }
+
+    window.open(data.signedUrl, '_blank')
+}
+
+// Subir archivo validando tamaño y extensión
+async function handleFileUpload() {
+    const fileInput = document.getElementById('fileInput')
+    const statusMessage = document.getElementById('statusMessage')
+    const uploadBtn = document.getElementById('uploadBtn')
+    const file = fileInput.files[0]
+
+    statusMessage.style.display = 'none'
+
+    if (!file) {
+        showStatus('Por favor selecciona un archivo .tar.zst primero.')
+        return
+    }
+
+    if (!file.name.toLowerCase().endsWith('.tar.zst')) {
+        showStatus('El archivo debe terminar estrictamente en .tar.zst')
+        return
+    }
+
+    if (file.size > MAX_SIZE_BYTES) {
+        showStatus(`El archivo pesa ${(file.size/1024).toFixed(2)} KB. El límite máximo permitido es de 10 KB.`)
+        return
+    }
+
+    uploadBtn.disabled = true
+    uploadBtn.innerText = 'Subiendo...'
+    showStatus('Subiendo archivo al Storage de Supabase...')
+
+    try {
+        const filePath = `uploads/${file.name}`
+
+        const { error: uploadError } = await supabaseClient.storage
+            .from(BUCKET_NAME)
+            .upload(filePath, file, {
+                cacheControl: '3600',
+                upsert: true,
+                contentType: 'application/octet-stream'
+            })
+
+        if (uploadError) throw uploadError
+
+        showStatus('¡Librería subida con éxito al Registry!')
+        fileInput.value = ''
+        loadPackages()
+
+    } catch (err) {
+        showStatus(`Error al subir: ${err.message}`)
+    } finally {
+        uploadBtn.disabled = false
+        uploadBtn.innerText = 'Subir al Registry de CPM'
+    }
+}
+
+function showStatus(text) {
+    const statusMessage = document.getElementById('statusMessage')
+    statusMessage.innerText = text
+    statusMessage.style.display = 'block'
+}
+</script>
+
+</body>
+</html>
