@@ -13,8 +13,8 @@
     <a href="#descargas" data-page="descargas">Descargas</a> |
     <a href="#librerias" data-page="librerias">Librerías</a> |
     <a href="#desarrollo" data-page="desarrollo">Desarrollo</a> |
-    <a href="#repositorio" data-page="repositorio">Repositorio</a> |
-    <a href="CPM/index.html">Coffi Package Manager</a>
+    <a href="#comunidad" data-page="comunidad">Comunidad</a> |
+    <a href="#repositorio" data-page="repositorio">Repositorio</a>
 </nav>
 
 </header><hr><main>
@@ -102,6 +102,40 @@
     </p>
 </section>
 
+<section id="comunidad" data-section hidden>
+    <h2>Comunidad y ecosistema de B++</h2>
+
+    <p>
+        Explora los proyectos y espacios relacionados con B++.
+    </p>
+
+    <h3>Coffi Package Manager (CPM)</h3>
+
+    <p>
+        Consulta Coffi Package Manager, parte del ecosistema de B++.
+    </p>
+
+    <p>
+        <a href="CPM/index.html">Visitar Coffi Package Manager</a>
+    </p>
+
+    <hr>
+
+    <h3>Comunidad de Reddit</h3>
+
+    <p>
+        Únete a la comunidad para conversar sobre B++ y compartir
+        experiencias relacionadas con el proyecto.
+    </p>
+
+    <p>
+        <a href="https://www.reddit.com/r/BppComuniy/s/ksIT5nYTAQ"
+           target="_blank" rel="noopener noreferrer">
+            Visitar comunidad de B++ en Reddit
+        </a>
+    </p>
+</section>
+
 <section id="repositorio" data-section hidden>
     <h2>Repositorio oficial</h2>
 
@@ -119,43 +153,54 @@
 </main><hr><footer>
     <p>B++ | PattitexTEC</p>
     <p>Desarrollado por Doryan Flores Sánchez.</p>
-    <p><a href="CPM/index.html">Visitar Coffi Package Manager</a></p>
 </footer><script>
 (function () {
     const sections = document.querySelectorAll("[data-section]");
 
+    const titles = {
+        inicio: "Inicio",
+        caracteristicas: "Características",
+        descargas: "Descargas",
+        librerias: "Librerías",
+        desarrollo: "Desarrollo",
+        comunidad: "Comunidad",
+        repositorio: "Repositorio"
+    };
+
     function showPage() {
-        const page = location.hash.slice(1) || "inicio";
-        let found = false;
+        let page = location.hash.slice(1) || "inicio";
 
-        sections.forEach(function (section) {
-            const active = section.id === page;
-            section.hidden = !active;
-
-            if (active) {
-                found = true;
-            }
-        });
-
-        if (!found) {
-            location.hash = "inicio";
-            return;
+        if (!titles[page]) {
+            page = "inicio";
         }
 
-        const titles = {
-            inicio: "Inicio",
-            caracteristicas: "Características",
-            descargas: "Descargas",
-            librerias: "Librerías",
-            desarrollo: "Desarrollo",
-            repositorio: "Repositorio"
-        };
+        sections.forEach(function (section) {
+            section.hidden = section.id !== page;
+        });
+
+        if (location.hash !== "#" + page) {
+            history.replaceState(null, "", "#" + page);
+        }
 
         document.title = "B++ | " + titles[page];
     }
+
+    document.querySelectorAll("[data-page]").forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const page = link.dataset.page;
+
+            if (location.hash === "#" + page) {
+                showPage();
+            } else {
+                location.hash = page;
+            }
+        });
+    });
 
     window.addEventListener("hashchange", showPage);
     showPage();
 })();
 </script></body>
-  </html>
+</html>
